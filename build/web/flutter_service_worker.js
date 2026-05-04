@@ -3,7 +3,8 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "71073c5be19fa7a451dfbb4d15de6e4f",
+const RESOURCES = {"apple-touch-icon.png": "fcf2038bfd4d2314552ab1b2212ecc60",
+"assets/AssetManifest.bin": "71073c5be19fa7a451dfbb4d15de6e4f",
 "assets/AssetManifest.bin.json": "c4f55e692d3fceca1901aa13001bfc2e",
 "assets/assets/images/logo_systeme.png": "811193df13a5d29995c5003d5304f1ff",
 "assets/assets/images/STAS_LOGOMACA1_VECT.svg": "df7309412b083ec8fff76b20a82214a8",
@@ -28,9 +29,9 @@ const RESOURCES = {"assets/AssetManifest.bin": "71073c5be19fa7a451dfbb4d15de6e4f
 "canvaskit/skwasm_heavy.wasm": "b0be7910760d205ea4e011458df6ee01",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "flutter.js": "24bc71911b75b5f8135c949e27a2984e",
-"flutter_bootstrap.js": "b51f0bc725262f87016fb5121a129315",
-"icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
-"icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
+"flutter_bootstrap.js": "18060240aec6856f291d69facb3a1730",
+"icons/Icon-192.png": "fcf2038bfd4d2314552ab1b2212ecc60",
+"icons/Icon-512.png": "fcf2038bfd4d2314552ab1b2212ecc60",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "index.html": "2fbdd56466b5db848b79325466a918c4",
