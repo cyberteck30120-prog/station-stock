@@ -104,13 +104,21 @@ class SearchQueryNotifier extends Notifier<String> {
 
 final searchQueryProvider = NotifierProvider<SearchQueryNotifier, String>(() => SearchQueryNotifier());
 
+// ── Filtrage ───────────────────────────────────────────────────────────────
+final lowStockOnlyProvider = StateProvider<bool>((ref) => false);
+
 // ── Produits ───────────────────────────────────────────────────────────────
 final productsProvider =
     FutureProvider.family<List<Product>, SpaceType>((ref, space) async {
   final restaurant = ref.watch(currentRestaurantProvider);
   final query = ref.watch(searchQueryProvider).toLowerCase();
+  final lowStockOnly = ref.watch(lowStockOnlyProvider);
   
-  final all = await ref.read(repositoryProvider).getProductsBySpace(space, restaurant);
+  var all = await ref.read(repositoryProvider).getProductsBySpace(space, restaurant);
+  
+  if (lowStockOnly) {
+    all = all.where((p) => p.quantity <= p.minQuantity).toList();
+  }
   
   if (query.isEmpty) return all;
   return all.where((p) => p.name.toLowerCase().contains(query)).toList();

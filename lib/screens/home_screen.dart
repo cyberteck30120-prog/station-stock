@@ -381,6 +381,16 @@ class _InventoryTab extends ConsumerWidget {
           },
           icon: const Icon(LucideIcons.fileDown, color: Colors.white),
         ),
+        IconButton(
+          onPressed: () {
+            ref.read(lowStockOnlyProvider.notifier).update((state) => !state);
+            HapticFeedback.lightImpact();
+          },
+          icon: Icon(
+            ref.watch(lowStockOnlyProvider) ? LucideIcons.filterX : LucideIcons.filter,
+            color: ref.watch(lowStockOnlyProvider) ? Colors.amber : Colors.white,
+          ),
+        ),
         IconButton(onPressed: onToggleSearch, icon: const Icon(LucideIcons.search, color: Colors.white)),
         IconButton(onPressed: onUserTap, icon: const Icon(LucideIcons.user, color: Colors.white)),
         const SizedBox(width: 8),
@@ -449,18 +459,20 @@ class _InventoryTab extends ConsumerWidget {
   Widget _buildSliverProductsList(BuildContext context, WidgetRef ref, List<Product> products, SpaceType currentSpace) {
     if (products.isEmpty) return const SliverToBoxAdapter(child: Center(child: Padding(padding: EdgeInsets.only(top: 100), child: Text('Aucun article trouvé'))));
 
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          final product = products[index];
-          return _StaggeredProductItem(
-            index: index,
-            product: product,
-            currentSpace: currentSpace,
-          );
-        },
-        childCount: products.length,
-      ),
+    return SliverReorderableList(
+      itemCount: products.length,
+      onReorder: (oldIndex, newIndex) {
+        ref.read(inventoryNotifierProvider.notifier).reorderProducts(oldIndex, newIndex, products);
+      },
+      itemBuilder: (context, index) {
+        final product = products[index];
+        return _StaggeredProductItem(
+          key: ValueKey(product.id),
+          index: index,
+          product: product,
+          currentSpace: currentSpace,
+        );
+      },
     );
   }
 }
@@ -528,6 +540,11 @@ class _StaggeredProductItemState extends ConsumerState<_StaggeredProductItem> wi
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
+                  ReorderableDragStartListener(
+                    index: widget.index,
+                    child: const Icon(LucideIcons.gripVertical, size: 20, color: AppTheme.textSecondary),
+                  ),
+                  const SizedBox(width: 12),
                   _buildProductIcon(isLowStock),
                   const SizedBox(width: 16),
                   Expanded(child: Column(
