@@ -703,12 +703,12 @@ void _showAddOrEditProductDialog(BuildContext context, WidgetRef ref, Product? p
               Row(
                 children: [
                   Expanded(child: TextField(controller: priceHTCtrl, decoration: const InputDecoration(labelText: 'Prix HT (€)'), keyboardType: const TextInputType.numberWithOptions(decimal: true), onChanged: (v) {
-                    final ht = double.tryParse(v) ?? 0;
+                    final ht = double.tryParse(v.replaceAll(',', '.')) ?? 0;
                     priceTTCCtrl.text = _fmt(ht * 1.2);
                   })),
                   const SizedBox(width: 12),
                   Expanded(child: TextField(controller: priceTTCCtrl, decoration: const InputDecoration(labelText: 'Prix TTC (€)'), keyboardType: const TextInputType.numberWithOptions(decimal: true), onChanged: (v) {
-                    final ttc = double.tryParse(v) ?? 0;
+                    final ttc = double.tryParse(v.replaceAll(',', '.')) ?? 0;
                     priceHTCtrl.text = _fmt(ttc / 1.2);
                   })),
                 ],
@@ -725,8 +725,8 @@ void _showAddOrEditProductDialog(BuildContext context, WidgetRef ref, Product? p
                   id: product?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
                   name: nameCtrl.text,
                   quantity: product?.quantity ?? 0,
-                  minQuantity: double.tryParse(minQtyCtrl.text) ?? 10,
-                  priceHT: double.tryParse(priceHTCtrl.text) ?? 0,
+                  minQuantity: double.tryParse(minQtyCtrl.text.replaceAll(',', '.')) ?? 10,
+                  priceHT: double.tryParse(priceHTCtrl.text.replaceAll(',', '.')) ?? 0,
                   unit: unitCtrl.text,
                   space: currentSpace,
                   imagePath: currentImagePath,
