@@ -703,13 +703,21 @@ void _showAddOrEditProductDialog(BuildContext context, WidgetRef ref, Product? p
               Row(
                 children: [
                   Expanded(child: TextField(controller: priceHTCtrl, decoration: const InputDecoration(labelText: 'Prix HT (€)'), keyboardType: const TextInputType.numberWithOptions(decimal: true), onChanged: (v) {
-                    final ht = double.tryParse(v.replaceAll(',', '.')) ?? 0;
-                    priceTTCCtrl.text = _fmt(ht * 1.2);
+                    final clean = v.replaceAll(',', '.').trim();
+                    if (clean.isEmpty) return;
+                    final ht = double.tryParse(clean);
+                    if (ht != null) {
+                      priceTTCCtrl.text = _fmt(ht * 1.2);
+                    }
                   })),
                   const SizedBox(width: 12),
                   Expanded(child: TextField(controller: priceTTCCtrl, decoration: const InputDecoration(labelText: 'Prix TTC (€)'), keyboardType: const TextInputType.numberWithOptions(decimal: true), onChanged: (v) {
-                    final ttc = double.tryParse(v.replaceAll(',', '.')) ?? 0;
-                    priceHTCtrl.text = _fmt(ttc / 1.2);
+                    final clean = v.replaceAll(',', '.').trim();
+                    if (clean.isEmpty) return;
+                    final ttc = double.tryParse(clean);
+                    if (ttc != null) {
+                      priceHTCtrl.text = _fmt(ttc / 1.2);
+                    }
                   })),
                 ],
               ),
